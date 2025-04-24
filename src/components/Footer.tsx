@@ -1,7 +1,11 @@
 export default function Footer() {
   return (
-    <footer className="bg-gray-100 text-center text-sm py-4">
-      © {new Date().getFullYear()} Verein für Hoffnung e. V.
+    <footer className="text-sm text-zinc-400 py-6">
+      <div className="max-w-screen-lg mx-auto px-4">
+        © 2025 Verein für Hoffnung e. V. · 
+        <a href="#impressum">Impressum</a> · 
+        <a href="#datenschutz">Datenschutz</a>
+      </div>
     </footer>
   );
 }
