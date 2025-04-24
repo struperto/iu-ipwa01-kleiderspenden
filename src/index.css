@@ -2,4 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body { @apply bg-zinc-900 text-white; }
+/* globales Farbschema – dunkler Hintergrund, weiße Schrift */
+body { @apply bg-zinc-900 text-white antialiased; }
+
+/* Links im Footer unauffällig */
+footer a { @apply text-indigo-300 hover:text-indigo-100 underline; }
