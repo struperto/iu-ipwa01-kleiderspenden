@@ -8,8 +8,8 @@ type Mode = 'office' | 'pickup';
 export default function Register() {
   const [mode, setMode] = useState<Mode>('office');
   const [form, setForm] = useState({
-    category: categories[0],
-    crisis: crisisRegions[0],
+    category: '',
+    crisis: '',
     street: '',
     zip: '',
     city: '',
@@ -22,6 +22,10 @@ export default function Register() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.category || !form.crisis) {
+      setError('Bitte Kleiderart und Krisengebiet auswählen.');
+      return;
+    }
     if (mode === 'pickup' && !isLocalZip(form.zip)) {
       setError('Abhol‑PLZ liegt außerhalb des Geschäftsstellen‑Gebiets (80xxx).');
       return;
@@ -67,8 +71,12 @@ export default function Register() {
             name="category"
             value={form.category}
             onChange={handleChange}
-            className="mt-1 w-full border p-2"
+            required
+            className="mt-1 w-full border p-2 bg-white text-black"
           >
+            <option value="" disabled>
+              Bitte wählen …
+            </option>
             {categories.map(c => (
               <option key={c}>{c}</option>
             ))}
@@ -82,8 +90,12 @@ export default function Register() {
             name="crisis"
             value={form.crisis}
             onChange={handleChange}
-            className="mt-1 w-full border p-2"
+            required
+            className="mt-1 w-full border p-2 bg-white text-black"
           >
+            <option value="" disabled>
+              Bitte wählen …
+            </option>
             {crisisRegions.map(r => (
               <option key={r}>{r}</option>
             ))}
@@ -100,7 +112,7 @@ export default function Register() {
                 required
                 value={form.street}
                 onChange={handleChange}
-                className="mt-1 w-full border p-2"
+                className="mt-1 w-full border p-2 placeholder:text-black text-black"
               />
             </label>
             <div className="flex gap-4">
@@ -111,7 +123,7 @@ export default function Register() {
                   required
                   value={form.zip}
                   onChange={handleChange}
-                  className="mt-1 w-full border p-2"
+                  className="mt-1 w-full border p-2 placeholder:text-black text-black"
                 />
               </label>
               <label className="flex-1">
@@ -121,7 +133,7 @@ export default function Register() {
                   required
                   value={form.city}
                   onChange={handleChange}
-                  className="mt-1 w-full border p-2"
+                  className="mt-1 w-full border p-2 placeholder:text-black text-black"
                 />
               </label>
             </div>
