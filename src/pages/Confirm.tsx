@@ -1,5 +1,12 @@
+import { Link } from 'react-router-dom';
+
 export default function Confirm() {
   const data = JSON.parse(localStorage.getItem('donation') ?? '{}');
+
+  const place =
+    data.mode === 'office'
+      ? 'Geschäftsstelle'
+      : `${data.street}, ${data.zip} ${data.city}`;
 
   if (!data.mode) return <p>Keine Spende gefunden.</p>;
 
@@ -11,14 +18,11 @@ export default function Confirm() {
         <li>Krisengebiet: {data.crisis}</li>
         <li>Datum: {new Date(data.date).toLocaleDateString('de-DE')}</li>
         <li>Uhrzeit: {new Date(data.date).toLocaleTimeString('de-DE')}</li>
-        {data.mode === 'pickup' ? (
-          <li>
-            Abholung bei: {data.street}, {data.zip} {data.city}
-          </li>
-        ) : (
-          <li>Übergabe an der Geschäftsstelle</li>
-        )}
+        <li>Ort: {place}</li>
       </ul>
+      <Link to="/" className="btn-primary inline-block mt-6">
+        Neue Spende registrieren
+      </Link>
     </section>
   );
 }

@@ -1,9 +1,20 @@
+/* Tailwind base + utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* globales Farbschema – dunkler Hintergrund, weiße Schrift */
+/* Globale Farben – dunkles Theme */
 body { @apply bg-zinc-900 text-white antialiased; }
 
-/* Links im Footer unauffällig */
+/* Footer-Links */
 footer a { @apply text-indigo-300 hover:text-indigo-100 underline; }
+
+/* Reusable input & button shortcuts */
+@layer components {
+  .input {
+    @apply w-full border rounded px-3 py-2 bg-white text-black placeholder:text-black focus:outline-none focus:ring-2 focus:ring-indigo-500;
+  }
+  .btn-primary {
+    @apply bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition;
+  }
+}

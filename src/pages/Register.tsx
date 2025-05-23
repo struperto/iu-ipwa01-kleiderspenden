@@ -15,10 +15,22 @@ export default function Register() {
     city: '',
   });
   const [error, setError] = useState('');
+  const [zipError, setZipError] = useState('');
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+
+    // Live PLZ validation
+    if (name === 'zip') {
+      if (value && !isLocalZip(value)) {
+        setZipError('Abhol‑PLZ liegt außerhalb 80 xxx');
+      } else {
+        setZipError('');
+      }
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,11 +132,19 @@ export default function Register() {
                 <span className="block font-medium">PLZ</span>
                 <input
                   name="zip"
-                  required
                   value={form.zip}
                   onChange={handleChange}
-                  className="mt-1 w-full border p-2 placeholder:text-black text-black"
+                  required
+                  maxLength={5}
+                  className={`mt-1 w-full border p-2 placeholder:text-black text-black ${zipError ? 'border-red-500' : ''}`}
+                  aria-invalid={zipError ? 'true' : 'false'}
+                  aria-describedby="zip-error"
                 />
+                {zipError && (
+                  <p id="zip-error" className="text-red-500 text-sm mt-1">
+                    {zipError}
+                  </p>
+                )}
               </label>
               <label className="flex-1">
                 <span className="block font-medium">Ort</span>
